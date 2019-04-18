@@ -108,7 +108,7 @@ sd.Factory 定义 在 github.com\go-kit\kit@v0.8.0\sd\factory.go 中，定义如
 type Factory func(instance string) (endpoint.Endpoint, io.Closer, error)
 ```
 
-![1555583463245](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1555583463245.png)
+![1](<https://github.com/superufo/go-kit0001/blob/master/img/1.png>)
 
 github.com\go-kit\kit@v0.8.0\transport\http\client.go 下面的Endpoint 方法：
 
