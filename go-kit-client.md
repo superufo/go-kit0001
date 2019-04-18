@@ -224,15 +224,15 @@ func NewRequest(method, url string, body io.Reader) (*Request, error) {
 			}
 ```
 
-![1555583790033](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1555583790033.png)
+![3](<https://github.com/superufo/go-kit0001/blob/master/img/3.png>)
 
 encode request : 如下
 
-![1555583953192](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1555583953192.png)
+![4](<https://github.com/superufo/go-kit0001/blob/master/img/4.png>)
 
 decode response: 如下
 
-​         ![1555584054111](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1555584054111.png)
+![5](<https://github.com/superufo/go-kit0001/blob/master/img/5.png>)
 
 
 
