@@ -179,7 +179,7 @@ func (c Client) Endpoint() endpoint.Endpoint {
 }
 ```
 
-![1555583650121](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\1555583650121.png)
+![2](<https://github.com/superufo/go-kit0001/blob/master/img/2.png>)
 
 
 
