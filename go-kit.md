@@ -93,14 +93,14 @@
 
 
 ​      
-        //包裹 限流器 判断流量是否溢出
-        // add ratelimit,refill every second,set capacity 3
-        //ratebucket := ratelimit.NewBucket(time.Second*1, 3)
-        //endpoint = NewTokenBucketLimitterWithJuju(ratebucket)(endpoint)
-        // 一秒3次的流量  怎么传进来  就怎么传出去  中间做了限流的异常判断
-        ratelimitter := rate.NewLimiter(rate.Every(time.Second*1),100)
-         endpoint = flow.NewTokenBucketLimitterWithBuildIn(ratelimitter)(endpoint)
-      
+​        //包裹 限流器 判断流量是否溢出
+​        // add ratelimit,refill every second,set capacity 3
+​        //ratebucket := ratelimit.NewBucket(time.Second*1, 3)
+​        //endpoint = NewTokenBucketLimitterWithJuju(ratebucket)(endpoint)
+​        // 一秒3次的流量  怎么传进来  就怎么传出去  中间做了限流的异常判断
+​        ratelimitter := rate.NewLimiter(rate.Every(time.Second*1),100)
+​         endpoint = flow.NewTokenBucketLimitterWithBuildIn(ratelimitter)(endpoint)
+​      
          /*************** 健康检查 ***********************/
          //创建健康检查的Endpoint，未增加限流
          healthEndpoint := flow.MakeHealthCheckEndpoint(svc)
@@ -283,13 +283,13 @@
 
 
 ​     
-    	//创建注册器
-    	registar :=  etcdv3.NewRegistrar(client,etcdv3.Service{
-    		Key: key,
-    		Value:value,
-    	},log.NewNopLogger())
-    	fmt.Printf("registar:%+v\n",registar)
-     
+​    	//创建注册器
+​    	registar :=  etcdv3.NewRegistrar(client,etcdv3.Service{
+​    		Key: key,
+​    		Value:value,
+​    	},log.NewNopLogger())
+​    	fmt.Printf("registar:%+v\n",registar)
+​     
     	//注册器启动注册
     	registar.Register()
      
@@ -520,3 +520,9 @@ func (s Server) ServeGRPC(ctx oldcontext.Context, req interface{}) (retctx oldco
 来自 superufo:
 
 https://blog.csdn.net/super_ufo/article/details/89372098
+
+
+
+md编辑工具：typora 推荐使用： 
+
+https://typora.io/
