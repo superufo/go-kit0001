@@ -108,7 +108,7 @@ sd.Factory 定义 在 github.com\go-kit\kit@v0.8.0\sd\factory.go 中，定义如
 type Factory func(instance string) (endpoint.Endpoint, io.Closer, error)
 ```
 
-![1](<https://github.com/superufo/go-kit0001/blob/master/img/1.png>)
+![img](https://github.com/superufo/go-kit0001/blob/master/img/1.png)
 
 github.com\go-kit\kit@v0.8.0\transport\http\client.go 下面的Endpoint 方法：
 
@@ -224,15 +224,15 @@ func NewRequest(method, url string, body io.Reader) (*Request, error) {
 			}
 ```
 
-![3](<https://github.com/superufo/go-kit0001/blob/master/img/3.png>)
+![img](<https://github.com/superufo/go-kit0001/blob/master/img/3.png>)
 
 encode request : 如下
 
-![4](<https://github.com/superufo/go-kit0001/blob/master/img/4.png>)
+![img](<https://github.com/superufo/go-kit0001/blob/master/img/4.png>)
 
 decode response: 如下
 
-![5](<https://github.com/superufo/go-kit0001/blob/master/img/5.png>)
+![img](<https://github.com/superufo/go-kit0001/blob/master/img/5.png>)
 
 
 
