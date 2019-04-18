@@ -1,0 +1,3 @@
+ubutun 18.04
+/gomodpro/exmaple/z.apimonitor.prometheus
+Linux docker 4.15.0-45-generic #48-Ubuntu SMP Tue Jan 29 16:28:13 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux

@@ -1,0 +1,10 @@
+version: '2'
+services:
+  consul:
+    image: progrium/consul
+    ports:
+      - "8500:8500"
+      - "8400:8400"
+      - "8600:53/udp"
+    command: -server -bootstrap -ui-dir /ui
+#界面：http://47.112.111.171:8500/ui/#/dc1/services

@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 15s
+  external_labels:
+    monitor: 'raysonxin-monitor'
+#47.112.111.171  客户端  本机IP 110.235.246.150
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['127.0.0.1:9090']
+        labels:
+          group: 'local'
+
+  - job_name: 'raysonxin'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['110.235.246.150:9550']
+        labels:
+          group: 'arithmetic'
