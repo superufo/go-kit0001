@@ -25,7 +25,7 @@
 
 ####常见main.go模式代码 （http）
      package main
-  
+
          import  (
             "context"
             "flag"
@@ -90,8 +90,9 @@
       
         //传入请求 ，传出响应（）， 调用service 处理业务逻辑
         endpoint := flow.MakeArithmeticEndpoint(svc)
-      
-      
+
+
+​      
         //包裹 限流器 判断流量是否溢出
         // add ratelimit,refill every second,set capacity 3
         //ratebucket := ratelimit.NewBucket(time.Second*1, 3)
@@ -136,7 +137,7 @@
         registar.Deregister()
         fmt.Println(error)
  	}
-   
+
 #### main.go grpc模式代码：
     package main
      
@@ -279,8 +280,9 @@
     		panic(err)
     	}
     	fmt.Println("start........")
-     
-     
+
+
+​     
     	//创建注册器
     	registar :=  etcdv3.NewRegistrar(client,etcdv3.Service{
     		Key: key,
@@ -325,6 +327,196 @@
     	gs.Serve(ls)
     	fmt.Println("end........")
     }
+
+### 1.go-kit 支持的协议
+
+![img](https://img-blog.csdnimg.cn/20190418142926177.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1cGVyX3Vmbw==,size_16,color_FFFFFF,t_70)
+
+ nats 协议的介绍: <https://www.cnblogs.com/liang1101/p/6641082.html>  支持同步消息和异步消息
+
+AMQP协议:            <http://www.amqp.org/>
+
+### 2.http request response 
+
+### ![img](https://img-blog.csdnimg.cn/20190418131137630.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1cGVyX3Vmbw==,size_16,color_FFFFFF,t_70)
+
+![img](https://img-blog.csdnimg.cn/20190418131544553.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1cGVyX3Vmbw==,size_16,color_FFFFFF,t_70)
+
+ D:\gopro\pkg\mod\github.com\go-kit\kit@v0.8.0\transport\http
+
+![img](https://img-blog.csdnimg.cn/20190418131855382.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1cGVyX3Vmbw==,size_16,color_FFFFFF,t_70)
+
+![img](https://img-blog.csdnimg.cn/20190418132242826.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1cGVyX3Vmbw==,size_16,color_FFFFFF,t_70)
+
+![img](https://img-blog.csdnimg.cn/20190418132847366.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1cGVyX3Vmbw==,size_16,color_FFFFFF,t_70)
+
+![img](https://img-blog.csdnimg.cn/2019041813294959.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1cGVyX3Vmbw==,size_16,color_FFFFFF,t_70)
+
+![img](https://img-blog.csdnimg.cn/20190418133117611.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1cGVyX3Vmbw==,size_16,color_FFFFFF,t_70)
+
+写一个服务的流程： encode Http reponse :
+
+![img](https://img-blog.csdnimg.cn/20190418140550195.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1cGVyX3Vmbw==,size_16,color_FFFFFF,t_70)
+
+![img](https://img-blog.csdnimg.cn/20190418141221798.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1cGVyX3Vmbw==,size_16,color_FFFFFF,t_70)
+
+### 3.grpc  request response 
+
+![img](https://img-blog.csdnimg.cn/20190418145311220.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1cGVyX3Vmbw==,size_16,color_FFFFFF,t_70)
+
+![img](https://img-blog.csdnimg.cn/20190418145136718.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1cGVyX3Vmbw==,size_16,color_FFFFFF,t_70)
+
+```
+bookListHandler := grpc_transport.NewServer(
+		edList,
+		decodeRequest,
+		encodeResponse,
+	)
  
+bookServer.bookListHandler = bookListHandler
+fmt.Printf("bookListHandler:%+v\n",bookListHandler)
+```
+
+```
+type BookServer struct{
+	bookListHandler grpc_transport.Handler
+	bookInfoHandler grpc_transport.Handler
+}
+```
+
+github.com\go-kit\kit@v0.8.0\transport\grpc 中定义
+
+```
+type Handler interface {
+	ServeGRPC(ctx oldcontext.Context, request interface{}) (oldcontext.Context, interface{}, error)
+}
+```
+
+```
+ grpc_transport.NewServer(
+   edList,
+   decodeRequest,
+   encodeResponse,
+)   
+结果的调用基于以下代码 (github.com\go-kit\kit@v0.8.0\transport\grpc)
+```
+
+```
+// Server wraps an endpoint and implements grpc.Handler.
+type Server struct {
+	e         endpoint.Endpoint
+	dec       DecodeRequestFunc
+	enc       EncodeResponseFunc
+	before    []ServerRequestFunc
+	after     []ServerResponseFunc
+	finalizer []ServerFinalizerFunc
+	logger    log.Logger
+}
+ 
+// NewServer constructs a new server, which implements wraps the provided
+// endpoint and implements the Handler interface. Consumers should write
+// bindings that adapt the concrete gRPC methods from their compiled protobuf
+// definitions to individual handlers. Request and response objects are from the
+// caller business domain, not gRPC request and reply types.
+func NewServer(
+	e endpoint.Endpoint,
+	dec DecodeRequestFunc,
+	enc EncodeResponseFunc,
+	options ...ServerOption,
+) *Server {
+	s := &Server{
+		e:      e,
+		dec:    dec,
+		enc:    enc,
+		logger: log.NewNopLogger(),
+	}
+	for _, option := range options {
+		option(s)
+	}
+	return s
+}
+```
+
+edList 方法 与  方法decodeRequest 绑定代码 （也就是  e 与  dec 绑定 ） 
+
+在  func (s Server) ServeGRPC(ctx oldcontext.Context, req interface{})
+
+(retctx oldcontext.Context, resp interface{}, err error) 中实现  （其中s 是 s := &Server 的s）：
+
+![img](https://img-blog.csdnimg.cn/20190418150659338.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3N1cGVyX3Vmbw==,size_16,color_FFFFFF,t_70)
+
+源码：
+
+```
+// ServeGRPC implements the Handler interface.
+func (s Server) ServeGRPC(ctx oldcontext.Context, req interface{}) (retctx oldcontext.Context, resp interface{}, err error) {
+	// Retrieve gRPC metadata.
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		md = metadata.MD{}
+	}
+ 
+	if len(s.finalizer) > 0 {
+		defer func() {
+			for _, f := range s.finalizer {
+				f(ctx, err)
+			}
+		}()
+	}
+ 
+	for _, f := range s.before {
+		ctx = f(ctx, md)
+	}
+ 
+	var (
+		request  interface{}
+		response interface{}
+		grpcResp interface{}
+	)
+ 
+	request, err = s.dec(ctx, req)
+	if err != nil {
+		s.logger.Log("err", err)
+		return ctx, nil, err
+	}
+ 
+	response, err = s.e(ctx, request)
+	if err != nil {
+		s.logger.Log("err", err)
+		return ctx, nil, err
+	}
+ 
+	var mdHeader, mdTrailer metadata.MD
+	for _, f := range s.after {
+		ctx = f(ctx, &mdHeader, &mdTrailer)
+	}
+ 
+	grpcResp, err = s.enc(ctx, response)
+	if err != nil {
+		s.logger.Log("err", err)
+		return ctx, nil, err
+	}
+ 
+	if len(mdHeader) > 0 {
+		if err = grpc.SendHeader(ctx, mdHeader); err != nil {
+			s.logger.Log("err", err)
+			return ctx, nil, err
+		}
+	}
+ 
+	if len(mdTrailer) > 0 {
+		if err = grpc.SetTrailer(ctx, mdTrailer); err != nil {
+			s.logger.Log("err", err)
+			return ctx, nil, err
+		}
+	}
+ 
+	return ctx, grpcResp, nil
+}
+```
+
+
+
+来自 superufo:
 
 https://blog.csdn.net/super_ufo/article/details/89372098
