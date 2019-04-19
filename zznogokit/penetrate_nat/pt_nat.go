@@ -17,10 +17,15 @@ const timeout = 5
 
 /***
 
-nb -listen 1997 2017 监听在局域网内网
-等待内网用户连接
-nb -tran 1997 192.168.1.2:3389  内网用户连接后，主动连接内网的192.168.1.2:3389
-将1997端口的包转发给 刚连接到内网的192.168.1.2:3389 的客户端，实现了跳板功能
+nb -listen 1997 2017
+监听在局域网内网，等待内网用户连接
+内网有用户连接后 端口 1997 的客户端 与 端口2017的客户端相互复制 实现了双工
+
+nb -tran 1997 192.168.1.2:3389
+内网用户连接后，   主动连接内网的192.168.1.2:3389
+
+
+将192.168.1.2:3389连接的客户端句柄赋给  1997，实现了跳板功能
 
 
 **/
@@ -94,6 +99,27 @@ func  main(){
 	}
 }
 
+//port2port函数实现了两个端口同时监听双向并且转发数据。
+func port2port(port1 string,port2 string)(){
+	listen1 := start_server("0.0.0.0:"+ port1)
+	listen2 := start_server("0.0.0.0:"+ port2)
+	log.Println("[√]", "listen port:", port1, "and", port2, "success. waiting for client...")
+
+	for {
+		conn1 := accept(listen1)
+		conn2 := accept(listen2)
+
+		if conn1==nil || conn2==nil {
+			log.Println("[x]", "accept client faild. retry in ", timeout, " seconds. ")
+			time.Sleep(timeout * time.Second)
+			continue
+		}
+
+		//conn1,conn2 客户端连接对象
+		forward(conn1,conn2)
+	}
+}
+
 /*** nb -slave 127.0.0.1:3389   8.8.8.8:1997***/
 //主动连接打通隧道
 func host2host(address1,address2 string){
@@ -157,7 +183,6 @@ func port2host(allowPort string, targetAddress string)(){
 	}
 }
 
-
 func checkIp(address string) bool{
 	ipAndPort := strings.Split(address,":")
 	if len(ipAndPort){
@@ -174,27 +199,6 @@ func checkIp(address string) bool{
 		log.Fatalln("[x]", "ip error. ")
 	}
 	return ok
-}
-
-//port2port函数实现了两个端口同时监听双向并且转发数据。
-func port2port(port1 string,port2 string)(){
-	listen1 := start_server("0.0.0.0:"+ port1)
-	listen2 := start_server("0.0.0.0:"+ port2)
-	log.Println("[√]", "listen port:", port1, "and", port2, "success. waiting for client...")
-
-	for {
-		conn1 := accept(listen1)
-		conn2 := accept(listen2)
-
-		if conn1==nil || conn2==nil {
-			log.Println("[x]", "accept client faild. retry in ", timeout, " seconds. ")
-			time.Sleep(timeout * time.Second)
-			continue
-		}
-
-		//conn1,conn2 客户端连接对象
-		forward(conn1,conn2)
-	}
 }
 
 func start_server(address string) net.Listener{
