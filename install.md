@@ -67,3 +67,30 @@
          etcdctl exec-watch --recursive /foo -- sh -c "echo hi"   
          etcdctl exec-watch mykey -- sh -c 'ls -al'    +    etcdctl update mykey "hehe"   
          etcdctl member list   
+
+
+
+- **go 环境变量**
+
+  set GOARCH=amd64
+  set GOBIN=
+  set GOCHAR=6
+  set GOEXE=.exe
+  set GOHOSTARCH=amd64
+  set GOHOSTOS=windows
+  set GOOS=windows
+  set GOPATH=
+  set GORACE=
+  set GOROOT=
+  set GOTOOLDIR=go\pkg\tool\windows_amd64
+  set CC=gcc
+  set GOGCCFLAGS=-m64 -mthreads -fmessage-length=0
+  set CXX=g++
+  set CGO_ENABLED=1
+
+  %GOBIN%/go build -x -v -ldflags "-s -w" -buildmode=c-archive -o main.a main.go 
+
+
+
+​安装标准共享库:go install -buildmode=shared -linkshared std 
+生成自己的共享库：  go install -buildmode=shared -linkshared ***.go (要生成共享库的go文件)
