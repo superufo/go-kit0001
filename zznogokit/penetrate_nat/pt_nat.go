@@ -6,7 +6,6 @@ import (
 	"log"
 	"net"
 	"os"
-	"regexp"
 	"strconv"
 	"strings"
 	"sync"
@@ -189,16 +188,18 @@ func checkIp(address string) bool{
 		log.Fatalln("[x]", "address error. should be a string like [ip:port]. ")
 	}
 
-	ip := ipAndPort[0]
+	//ip := ipAndPort[0]
 	port := ipAndPort[1]
 	checkPort(port)
-	patter := `^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5]\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5]\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$`
-    ok, err :=  regexp.MatchString(patter,ip)
+	// import 	"regexp"
+	//patter := `^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5]\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5]\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$`
+    //ok, err :=  regexp.MatchString(patter,ip)
 
-	if err != nil || !ok {
-		log.Fatalln("[x]", "ip error. ")
-	}
-	return ok
+	//if err != nil || !ok {
+	//	log.Fatalln("[x]", "ip error. ")
+	//}
+	//return ok
+	return true
 }
 
 func start_server(address string) net.Listener{
@@ -309,10 +310,10 @@ fmt包输出是非线程安全的，而log包下的输出都是线程安全的�
 ***/
 func printWelcome() {
 	fmt.Println("+----------------------------------------------------------------+")
-	fmt.Println("| Welcome to use NATBypass Ver1.0.0 .                            |")
-	fmt.Println("| Code by cw1997 at 2017-10-19 03:59:51                          |")
+	fmt.Println("| Welcome to use  PenetrateNat                            |")
+	fmt.Println("| Code by cw1997 at 2020-01-01                          |")
 	fmt.Println("| If you have some problem when you use the tool,                |")
-	fmt.Println("| please submit issue at : https://github.com/cw1997/NATBypass . |")
+	fmt.Println("| please submit issue at : ××××××××××× . |")
 	fmt.Println("+----------------------------------------------------------------+")
 	fmt.Println()
 	// sleep one second because the fmt is not thread-safety.
