@@ -17,3 +17,8 @@ D:\gopromod\zz.wt\consuldiscover\gateway (master -> origin)
 
 
 
+![](https://github.com/superufo/go-kit0001/blob/master/img/gateway01.png)
+
+![](https://github.com/superufo/go-kit0001/blob/master/img/gateway02.png)
+
+![](https://github.com/superufo/go-kit0001/blob/master/img/gateway03.png)
