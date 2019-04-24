@@ -182,6 +182,7 @@ func main(){
 	fmt.Printf("gs:%+v\n",gs)
 	book.RegisterBookServiceServer(gs,bookServer)
 	fmt.Println("mid........")
+	//http2 走这个  func (s *Server) newHTTP2Transport(c net.Conn, authInfo credentials.AuthInfo) transport.ServerTransport {
 	gs.Serve(ls)
 	fmt.Println("end........")
 }

@@ -25,6 +25,7 @@ func main(){
 		var txtByte = []rune(txt)
 		for i:=0;i<15;i++{
 			randInt := rand.Int31n(int32(len))
+			fmt.Println(txtByte[randInt]+"\n")
 			randStr = randStr + string(txtByte[randInt])
 		}
 
