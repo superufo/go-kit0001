@@ -3,14 +3,14 @@ package main
 import (
 	"net"
 	"net/rpc"
-	"reverserrpc/service/HelloService"
+	"reverserpc/service"
 	"time"
 )
 
 //服务器端  内网主动拨外网建立连接
 func main(){
 	//rpc 服务器端
-	rpc.Register(new(HelloService))
+	rpc.Register(new(service.HelloService))
 
 	for{
 		//tcp客户端

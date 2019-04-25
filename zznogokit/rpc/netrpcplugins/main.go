@@ -32,13 +32,13 @@ func main(){
 
 	g.GenerateAllFiles()
 
-	data,err = proto.Marchal(g.Response)
+	data,err = proto.Marshal(g.Response)
 	if err !=nil {
 		g.Error(err,"failed  to marshal output proto")
 	}
 
 	_,err = os.Stdout.Write(data)
 	if err !=nil {
-		g.Error(err."fail to write output proto")
+		g.Error(err,"fail to write output proto")
 	}
 }

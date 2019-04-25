@@ -20,7 +20,7 @@ func (p *HelloService) Hello (request string ,reply *string) error {
 	if !p.isLogin {
 		return fmt.Errorf("please login")
 	}
-	
+
 	*reply = "hello" + request + ",from " + p.conn.RemoteAddr()
 	return nil
 }
