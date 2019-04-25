@@ -11,7 +11,8 @@ import (
 
 func main() {
 	//注册为Rpc函数
-	rpc.RegisterName("KVStoreService", new(lib.KVStoreService))
+	kvStoreService :=  lib.NewKVStoreService()
+	rpc.RegisterName("KVStoreService", kvStoreService)
 
 	listener, err := net.Listen("tcp", ":12344")
 	if err != nil {

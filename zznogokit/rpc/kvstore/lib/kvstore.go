@@ -53,9 +53,11 @@ kv  key 和 value
 */
 func (p *KVStoreService) Set (kv [2]string,reply *string) error {
 	fmt.Printf("kvsl%+v",kv)
+	fmt.Printf("0:%s  1: %s",kv[0],kv[1])
+
 	p.mu.Lock()
 	defer p.mu.Unlock()
-
+	fmt.Println("111")
 	key,value := kv[0],kv[1]
 	if oldValue := p.m[key]; oldValue!= value {
 		for _,fn := range p.filter{
@@ -64,8 +66,11 @@ func (p *KVStoreService) Set (kv [2]string,reply *string) error {
 		}
 	}
 
+	fmt.Printf("key:%s  value: %s",key,value)
 	*reply = "ok"
+
 	p.m[key] = value
+	fmt.Println("end")
 	return nil
 }
 
