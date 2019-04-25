@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 	"time"
-	. "z.example/pubsub/pse"
+	. "pubsub/pse"
 )
 
 func main() {

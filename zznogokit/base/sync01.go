@@ -1,4 +1,4 @@
-package z_test_sync
+package main
 
 import (
 	"fmt"
