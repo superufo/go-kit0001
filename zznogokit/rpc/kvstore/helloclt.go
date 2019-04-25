@@ -59,7 +59,6 @@ func main() {
 		//kvsl := new(kv)
 		//kvsl.key = randStr
 		//kvsl.value = randValueStr
-
 		err = client.Call("KVStoreService.Set", [2]string{randStr, randValueStr}, &reply)
 		fmt.Println(reply)
 		err = client.Call("KVStoreService.Get", randStr, &reply)
