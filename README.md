@@ -24,3 +24,12 @@ go build main.go
 
 GOOS：目标平台的操作系统（darwin、freebsd、linux、windows）
 GOARCH：目标平台的体系架构（386、amd64、arm）
+
+非微服务的代码包：
+zznogokit  主要是 advanced-go-programming-book.pdf 部分grpc 代码
+zz.example                                
+zznogokit01    
+
+除此上述文件件都是微服务的代码      
+
+
