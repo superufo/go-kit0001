@@ -26,7 +26,10 @@ GOOS：目标平台的操作系统（darwin、freebsd、linux、windows）
 GOARCH：目标平台的体系架构（386、amd64、arm）
 
 非微服务的代码包：
-zznogokit  主要是 advanced-go-programming-book.pdf 部分grpc 代码
+zznogokit  主要是 advanced-go-programming-book.pdf 部分grpc 代码  
+https://github.com/chai2010/advanced-go-programming-book/tree/master/examples             
+ 
+
 zz.example                                
 zznogokit01    
 
