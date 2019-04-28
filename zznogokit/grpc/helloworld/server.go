@@ -1,11 +1,12 @@
-package example01
+package main
 
 import (
 	"context"
-	"example01/pb"
 	"log"
 	"net"
 	"google.golang.org/grpc"
+
+	"hello/pb"
 )
 
 type HelloServiceImpl struct{}
@@ -13,7 +14,7 @@ type HelloServiceImpl struct{}
 func (p *HelloServiceImpl) Hello(
 	ctx context.Context, args *pb.String,
 ) (*pb.String, error) {
-	reply := &pb.String{Value: "hello:" + args.GetValue()}
+	reply := &pb.String{Value: "hello world:" + args.GetValue()}
 	return reply, nil
 }
 
