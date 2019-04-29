@@ -21,6 +21,8 @@ func (p *HelloServiceImpl)Hello (
 }
 
 //grpc stream
+//发现服务端和客户端的流辅助接口均定义了Send和Recv方法用于流数据的双
+//向通信
 func (p *HelloServiceImpl)Channel(stream pb.HelloService_ChannelServer) error {
 	for {
 		args ,err := stream.Recv()

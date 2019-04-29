@@ -1,0 +1,89 @@
+集群包含三个node：etcd1, etcd2, etcd3
+
+参考 http://www.haodaquan.com/170
+
+1> 下载镜像
+docker pull quay.io/coreos/etcd
+
+2>docker-compose.yaml
+version: '2'
+networks:
+  byfn:
+
+services:
+  etcd1:
+    image: quay.io/coreos/etcd
+    container_name: etcd1
+    command: etcd -name etcd1 -advertise-client-urls http://0.0.0.0:2379 -listen-client-urls http://0.0.0.0:2379 -listen-peer-urls http://0.0.0.0:2380 -initial-cluster-token etcd-cluster -initial-cluster "etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380" -initial-cluster-state new
+    ports:
+      - 2379
+      - 2380
+    networks:
+      - byfn
+
+  etcd2:
+    image: quay.io/coreos/etcd
+    container_name: etcd2
+    command: etcd -name etcd2 -advertise-client-urls http://0.0.0.0:2379 -listen-client-urls http://0.0.0.0:2379 -listen-peer-urls http://0.0.0.0:2380 -initial-cluster-token etcd-cluster -initial-cluster "etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380" -initial-cluster-state new
+    ports:
+      - 2379
+      - 2380
+    networks:
+      - byfn
+
+  etcd3:
+    image: quay.io/coreos/etcd
+    container_name: etcd3
+    command: etcd -name etcd3 -advertise-client-urls http://0.0.0.0:2379 -listen-client-urls http://0.0.0.0:2379 -listen-peer-urls http://0.0.0.0:2380 -initial-cluster-token etcd-cluster -initial-cluster "etcd1=http://etcd1:2380,etcd2=http://etcd2:2380,etcd3=http://etcd3:2380" -initial-cluster-state new
+    ports:
+      - 2379
+      - 2380
+    networks:
+      - byfn
+
+
+docker-compose up
+
+启动后
+D:\gopromod\zz.etcd.group
+λ docker ps
+CONTAINER ID        IMAGE                 COMMAND                  CREATED             STATUS              PORTS                                              NAMES
+a8169434bef3        quay.io/coreos/etcd   "etcd -name etcd2 -a…"   41 seconds ago      Up 37 seconds       0.0.0.0:32773->2379/tcp, 0.0.0.0:32772->2380/tcp   etcd2
+12ca0bb9666f        quay.io/coreos/etcd   "etcd -name etcd3 -a…"   41 seconds ago      Up 38 seconds       0.0.0.0:32771->2379/tcp, 0.0.0.0:32770->2380/tcp   etcd3
+c704a36cb8e6        quay.io/coreos/etcd   "etcd -name etcd1 -a…"   41 seconds ago      Up 38 seconds       0.0.0.0:32769->2379/tcp, 0.0.0.0:32768->2380/tcp   etcd1
+49b682bdbf1f        v3_nginx              "nginx -g 'daemon of…"   6 weeks ago         Up 20 minutes       0.0.0.0:80->80/tcp                                 v3_nginx_1
+dce9cd05611e        v3_php-fpm            "/docker-entrypoint.…"   6 weeks ago         Up 20 minutes       0.0.0.0:9000->9000/tcp                             v3_php-fpm_1
+
+docker exec -t etcd1 etcdctl member list
+ade526d28b1f92f7: name=etcd1 peerURLs=http://etcd1:2380 clientURLs=http://0.0.0.0:2379 isLeader=true
+bd388e7810915853: name=etcd3 peerURLs=http://etcd3:2380 clientURLs=http://0.0.0.0:2379 isLeader=false
+d282ac2ce600c1ce: name=etcd2 peerURLs=http://etcd2:2380 clientURLs=http://0.0.0.0:2379 isLeader=false
+
+D:\gopromod\zz.etcd.group
+λ docker exec -t etcd3 etcdctl -C http://etcd1:2379,http://etcd2:2379,http://etcd3:2379 member list
+ade526d28b1f92f7: name=etcd1 peerURLs=http://etcd1:2380 clientURLs=http://0.0.0.0:2379 isLeader=true
+bd388e7810915853: name=etcd3 peerURLs=http://etcd3:2380 clientURLs=http://0.0.0.0:2379 isLeader=false
+d282ac2ce600c1ce: name=etcd2 peerURLs=http://etcd2:2380 clientURLs=http://0.0.0.0:2379 isLeader=false
+
+测试数据：
+curl -L http://127.0.0.1:32773/v2/keys/foo -XPUT -d value="Hello foo"
+curl -L http://127.0.0.1:32769/v2/keys/foo1/foo1 -XPUT -d value="Hello foo1"
+curl -L http://127.0.0.1:32773/v2/keys/foo2/foo2 -XPUT -d value="Hello foo2"
+curl -L http://127.0.0.1:32773/v2/keys/foo2/foo21/foo21 -XPUT -d value="Hello foo21"
+curl -L http://127.0.0.1:32771/v2/keys/foo
+curl -L http://127.0.0.1:32771/v2/keys/foo2
+curl -L http://127.0.0.1:32771/v2/keys/foo2?recursive=true
+
+curl -L http://192.168.0.105:32773/v2/keys/mku  -XPUT -d value="Hello foo"
+
+
+-name 节点名称，默认是UUID
+-data-dir 保存日志和快照的目录，默认为当前工作目录
+-addr 公布的ip地址和端口。 默认为127.0.0.1:2379
+-bind-addr 用于客户端连接的监听地址，默认为-addr配置
+-peers 集群成员逗号分隔的列表，例如 127.0.0.1:2380,127.0.0.1:2381
+-peer-addr 集群服务通讯的公布的IP地址，默认为 127.0.0.1:2380.
+-peer-bind-addr 集群服务通讯的监听地址，默认为-peer-addr配置
+
+//如果设置的监听地址是0.0.0.0那么我们无论是通过IP192.168.1.2还是10.1.1.12都是可以访问该服务的。
+//在路由中，0.0.0.0表示的是默认路由，即当路由表中没有找到完全匹配的路由的时候所对应的路由
