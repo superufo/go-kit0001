@@ -10,6 +10,7 @@ import (
 
 func main(){
 	grpcServer := grpc.NewServer()
+	
 	pb.RegisterPubsubServiceServer(grpcServer,service.NewPubsubService())
 
 	lis,err := net.Listen("tcp",":1234")
